@@ -1,36 +1,192 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# myblog-frontend — Next.js Frontend
 
-## Getting Started
+A modern blog frontend built with **Next.js 16** that fetches and displays data from the [myblog Django REST API](https://github.com/dikshyak/myblog).
 
-First, run the development server:
+---
+
+## What it does
+
+- Fetches blog posts from Django REST API
+- Displays all published posts on the homepage
+- Individual post detail pages with slug URLs
+- Server side rendering — fast load and great SEO
+- Cover images served from Django media server
+
+---
+
+## Tech stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 16 | React framework with server rendering |
+| React | UI components |
+| JavaScript | Programming language |
+| ESLint | Code quality |
+
+---
+
+## Project structure
+
+```
+myblog-frontend/
+├── app/
+│   ├── posts/
+│   │   └── [slug]/
+│   │       └── page.js    # Individual post page
+│   ├── layout.js           # Root layout
+│   ├── page.js             # Homepage — all posts
+│   └── globals.css         # Global styles
+├── public/                 # Static files
+├── next.config.mjs         # Next.js configuration
+└── package.json            # Dependencies
+```
+
+---
+
+## How it works
+
+```
+User visits localhost:3000
+        ↓
+Next.js server runs page.js
+        ↓
+Fetches data from Django API
+GET http://127.0.0.1:8000/posts/api/posts/
+        ↓
+Django returns JSON data
+        ↓
+Next.js builds complete HTML
+        ↓
+Browser shows the blog instantly
+```
+
+---
+
+## Getting started
+
+### Requirements
+
+Make sure the Django backend is running first:
+```
+https://github.com/dikshyak/myblog
+```
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/dikshyak/myblog-frontend.git
+cd myblog-frontend
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Open your browser
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+| URL | Description |
+|---|---|
+| `localhost:3000/` | Homepage — all published posts |
+| `localhost:3000/posts/[slug]/` | Individual post detail page |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API endpoints used
 
-## Deploy on Vercel
+Both from the Django backend running on port 8000:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+GET http://127.0.0.1:8000/posts/api/posts/
+→ Returns list of all published posts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GET http://127.0.0.1:8000/posts/api/posts/<slug>/
+→ Returns single post by slug
+```
+
+---
+
+## Why Next.js over plain React?
+
+| Feature | Plain React | Next.js |
+|---|---|---|
+| Routing | Manual setup | Automatic via folders |
+| Server rendering | No | Yes |
+| SEO | Poor | Excellent |
+| First load speed | Slow | Fast |
+| File structure | No convention | Clear convention |
+
+---
+
+## Running both servers together
+
+You need two terminals running at the same time:
+
+**Terminal 1 — Django backend:**
+```bash
+cd C:\Users\LOQ\Desktop\myblog
+venv\Scripts\activate
+python manage.py runserver
+```
+
+**Terminal 2 — Next.js frontend:**
+```bash
+cd C:\Users\LOQ\Desktop\myblog-frontend
+npm run dev
+```
+
+Then visit `http://localhost:3000`
+
+---
+
+## Related repository
+
+Backend Django REST API:
+```
+https://github.com/dikshyak/myblog
+```
+
+---
+
+## What I learned building this
+
+- What Next.js is and why it exists
+- How Next.js file based routing works
+- Server side rendering and why it matters
+- How to fetch data from a Django REST API
+- How frontend and backend communicate through JSON
+- Full stack web development with Python and JavaScript
+
+---
+
+## Author
+
+**Dikshya Khadka**
+GitHub: [@dikshyak](https://github.com/dikshyak)
+
+---
+
+## Next steps
+
+- [ ] Add Tailwind CSS styling
+- [ ] Add loading states
+- [ ] Add error handling
+- [ ] Deploy frontend to Vercel
+- [ ] Deploy backend to Railway
+- [ ] Add user authentication
+- [ ] Add comments system
